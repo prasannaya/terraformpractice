@@ -1,11 +1,11 @@
 ### To get the default vpcid of the default vpc
 
-data "aws_vpc" "default-vpcid" {
+data "aws_vpc" "default_vpcid" {
     default = true
 }
 
 output "defaultvpcid" {
-    value = data.aws_vpc.default-vpcid.id    
+    value = data.aws_vpc.default_vpcid.id    
 }
 
 ### to get all private subnets in vpc
