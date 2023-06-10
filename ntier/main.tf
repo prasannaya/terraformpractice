@@ -20,7 +20,7 @@ resource "aws_vpc" "my_vpc_second" {
 #creating 2 private subnets - availability zone a
 
 resource "aws_subnet" "my_privsubnets_vpc2" {
-    count = length(var.privsubnametags-vpc2)
+    count = length(var.privsubnametags_vpc2)
     availability_zone = local.az-a
     cidr_block = cidrsubnet(var.cidr_block2, 8, count.index)
     vpc_id = aws_vpc.my_vpc_second.id                               
@@ -36,12 +36,12 @@ resource "aws_subnet" "my_privsubnets_vpc2" {
 #creating 2 more private subnets - availability zone b
 
 resource "aws_subnet" "my_privsubnets_azb" {
-    count = length(var.privsubnametags-azb)
-    availability_zone = local.az-b
-    cidr_block = cidrsubnet(var.cidr_block2, 8, (count.index + length(var.privsubnametags-vpc2)))
+    count = length(var.privsubnametags_azb)
+    availability_zone = local.az_b
+    cidr_block = cidrsubnet(var.cidr_block2, 8, (count.index + length(var.privsubnametags_vpc2)))
     vpc_id = aws_vpc.my_vpc_second.id                               
     tags = {
-         "Name" = var.privsubnametags-azb[count.index]
+         "Name" = var.privsubnametags_azb[count.index]
          "Tier" = "private"
     }
     depends_on = [
@@ -52,12 +52,12 @@ resource "aws_subnet" "my_privsubnets_azb" {
 #creating 2 public subnets
 
 resource "aws_subnet"  "my_pubsubnets_vpc2" {
-    count = length(var.pubsubnametags-vpc2)
+    count = length(var.pubsubnametags_vpc2)
     availability_zone = local.az-b
-    cidr_block = cidrsubnet(var.cidr_block2, 8, (count.index + length(var.privsubnametags-vpc2)+ length(var.privsubnametags-azb)))
+    cidr_block = cidrsubnet(var.cidr_block2, 8, (count.index + length(var.privsubnametags_vpc2)+ length(var.privsubnametags_azb)))
     vpc_id = aws_vpc.my_vpc_second.id                              
     tags = {
-         "Name" = var.pubsubnametags-vpc2[count.index]
+         "Name" = var.pubsubnametags_vpc2[count.index]
          "Tier" = "public"
     }
 
@@ -156,7 +156,7 @@ resource "aws_instance" "my_app1_ec2" {
     instance_type = local.inst_type
     key_name = "my_id"
     vpc_security_group_ids = [aws_security_group.my_app_sg1.id]
-    subnet_id = aws_subnet.my_privsubnets_vpc2[local.app-subnet-1].id
+    subnet_id = aws_subnet.my_privsubnets_vpc2[local.app_subnet_1].id
     tags = {
       "Name" = var.appinstancedetails.name1
     }
@@ -176,7 +176,7 @@ resource "aws_instance" "my_app2_ec2" {
     instance_type = local.inst_type
     key_name = "my_id"
     vpc_security_group_ids = [aws_security_group.my_app_sg1.id]
-    subnet_id = aws_subnet.my_privsubnets_azb[local.app-subnet-2].id
+    subnet_id = aws_subnet.my_privsubnets_azb[local.app_subnet_2].id
     tags = {
       "Name" = var.appinstancedetails.name2
     }
@@ -236,7 +236,7 @@ resource "aws_instance" "my_web1_ec2" {
     instance_type = local.inst_type
     key_name = "my_id"
     vpc_security_group_ids = [aws_security_group.my_web_sg1.id]
-    subnet_id = aws_subnet.my_pubsubnets_vpc2[local.web-subnet-1].id
+    subnet_id = aws_subnet.my_pubsubnets_vpc2[local.web_subnet_1].id
     tags = {
       "Name" = var.webinstancedetails.name1
     }
@@ -250,12 +250,12 @@ resource "aws_instance" "my_web1_ec2" {
 # creating web instance -2
 
 resource "aws_instance" "my_web2_ec2" {
-    ami = var.webinstancedetails.ami-id
+    ami = var.webinstancedetails.ami_id
     associate_public_ip_address = true
     instance_type = local.inst_type
     key_name = "my_id"
     vpc_security_group_ids = [aws_security_group.my_web_sg1.id]
-    subnet_id = aws_subnet.my_pubsubnets_vpc2[local.web-subnet-2].id
+    subnet_id = aws_subnet.my_pubsubnets_vpc2[local.web_subnet_2].id
     tags = {
       "Name" = var.webinstancedetails.name2
     }
