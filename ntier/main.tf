@@ -25,7 +25,7 @@ resource "aws_subnet" "my_privsubnets_vpc2" {
     cidr_block = cidrsubnet(var.cidr_block2, 8, count.index)
     vpc_id = aws_vpc.my_vpc_second.id                               
     tags = {
-         "Name" = var.privsubnametags-vpc2[count.index]
+         "Name" = var.privsubnametags_vpc2[count.index]
          "Tier" = "private"
     }
     depends_on = [
@@ -53,7 +53,7 @@ resource "aws_subnet" "my_privsubnets_azb" {
 
 resource "aws_subnet"  "my_pubsubnets_vpc2" {
     count = length(var.pubsubnametags_vpc2)
-    availability_zone = local.az-b
+    availability_zone = local.az_b
     cidr_block = cidrsubnet(var.cidr_block2, 8, (count.index + length(var.privsubnametags_vpc2)+ length(var.privsubnametags_azb)))
     vpc_id = aws_vpc.my_vpc_second.id                              
     tags = {
