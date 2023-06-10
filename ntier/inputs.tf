@@ -35,17 +35,17 @@ variable "vpc2Nametag" {
 
 ###################################### PRIVATE and PUBLIC SUBNETS-VPC2
 
-variable "privsubnametags-vpc2" {
+variable "privsubnametags_vpc2" {
    type = list(string)
    default = [ "app1","db1" ]
 }
 
-variable "privsubnametags-azb" {
+variable "privsubnametags_azb" {
    type = list(string)
    default = [ "app2","db2" ]
 }
 
-variable "pubsubnametags-vpc2" {
+variable "pubsubnametags_vpc2" {
    type = list(string)
    default = [ "web1","web2"]
 }
@@ -96,12 +96,12 @@ variable "dbsubnetgroupname" {
 
 variable "appinstancedetails" {
     type = object ({
-        ami-id = string
+        ami_id = string
         name1= string
         name2= string
     })
     default = {
-        ami-id = "ami-076bca9dd71a9a578"
+        ami_id = "ami-076bca9dd71a9a578"
         name1= "app1"
         name2= "app2"
     }
@@ -120,12 +120,12 @@ variable "appinstancedetails" {
 
 variable "webinstancedetails" {
     type = object ({
-        ami-id = string
+        ami_id = string
         name1= string
         name2= string
     })
     default = {
-        ami-id = "ami-076bca9dd71a9a578"
+        ami_id = "ami-076bca9dd71a9a578"
         name1= "web1"
         name2= "web2"
     }
