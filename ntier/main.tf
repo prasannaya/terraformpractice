@@ -21,7 +21,7 @@ resource "aws_vpc" "my_vpc_second" {
 
 resource "aws_subnet" "my_privsubnets_vpc2" {
     count = length(var.privsubnametags_vpc2)
-    availability_zone = local.az-a
+    availability_zone = local.az_a
     cidr_block = cidrsubnet(var.cidr_block2, 8, count.index)
     vpc_id = aws_vpc.my_vpc_second.id                               
     tags = {
@@ -100,7 +100,7 @@ resource "aws_db_subnet_group" "my_dbsubnet_grp" {
 
 resource "aws_db_instance" "my_db_instances" {
     allocated_storage = local.storage
-    db_name = local.db-name
+    db_name = local.db_name
     db_subnet_group_name = aws_db_subnet_group.my_dbsubnet_grp.name
     engine = local.engine
     engine_version = local.engine_version
@@ -151,7 +151,7 @@ resource "aws_security_group" "my_app_sg1" {
 # creating app instance -1
 
 resource "aws_instance" "my_app1_ec2" {
-    ami = var.appinstancedetails.ami-id
+    ami = var.appinstancedetails.ami_id
     associate_public_ip_address = true
     instance_type = local.inst_type
     key_name = "my_id"
@@ -171,7 +171,7 @@ resource "aws_instance" "my_app1_ec2" {
 # creating app instance -2
 
 resource "aws_instance" "my_app2_ec2" {
-    ami = var.appinstancedetails.ami-id
+    ami = var.appinstancedetails.ami_id
     associate_public_ip_address = true
     instance_type = local.inst_type
     key_name = "my_id"
@@ -231,7 +231,7 @@ resource "aws_security_group" "my_web_sg1" {
 # creating web instance -1
 
 resource "aws_instance" "my_web1_ec2" {
-    ami = var.webinstancedetails.ami-id
+    ami = var.webinstancedetails.ami_id
     associate_public_ip_address = true
     instance_type = local.inst_type
     key_name = "my_id"
